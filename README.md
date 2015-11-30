@@ -1,2 +1,2 @@
 # docker-mysql
-Docker image for managing MySQL
+Docker image for MySQL
