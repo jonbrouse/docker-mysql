@@ -18,4 +18,4 @@ The `docker-compose.yml` file uses an alternate `Dockerfile`. When creating this
 ### Build and Start Your Container
 
 	docker-compose build
-	docke-compose up -d
+	docker-compose up -d
