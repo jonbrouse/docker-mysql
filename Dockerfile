@@ -7,7 +7,9 @@ RUN apt-get update && \
 
 ENV DEBIAN_FRONTEND=newt
 
-ONBUILD COPY assets/databases/ /tmp/
+COPY assets/post_inst.sh /tmp/post_inst.sh
+
+ONBUILD COPY assets/databases /tmp/databases/
 ONBUILD RUN chmod +x /tmp/post_inst.sh && \
   /bin/sh /tmp/post_inst.sh && \
   rm -rf /tmp/*
