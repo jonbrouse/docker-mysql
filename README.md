@@ -15,6 +15,7 @@ The `docker-compose.yml` file uses an alternate `Dockerfile`. When creating this
 	FROM jonbrouse/mysql
 	CMD ["mysqld"]
 
+
 ### Build and Start Your Container
 
 	docker-compose build
