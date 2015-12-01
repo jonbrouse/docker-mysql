@@ -1,3 +1,0 @@
-FROM jonbrouse/mysql
-
-CMD ["mysqld"]
