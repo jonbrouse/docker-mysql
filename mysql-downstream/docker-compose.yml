@@ -1,9 +1,7 @@
 version: '2'
 services:
   mysql:
-    build:
-      context: .
-      dockerfile: DockerfileImport
+    build: .
     container_name: mysql
     hostname: mysql
     command: --user=root
@@ -13,5 +11,5 @@ services:
       - ROOT_PASSWORD=password
     ports:
       - "3306:3306"
-    volumes:
-      - "./assets/:/tmp/"
+    #volumes:
+    #  - "./assets/:/tmp/"

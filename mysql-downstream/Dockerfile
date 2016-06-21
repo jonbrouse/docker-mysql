@@ -1,7 +1,9 @@
 FROM jonbrouse/mysql
 
-ENV DB_USER=user
-    DB_USER_PASSWORD=password
-    ROOT_PASSWORD=password
+COPY assets/databases /tmp/databases/
+
+RUN chown -R mysql:root /tmp/* && \
+    /bin/sh /tmp/create_import_db.sh && \
+    rm -rf /tmp/*
 
 ENTRYPOINT ["mysqld"]
