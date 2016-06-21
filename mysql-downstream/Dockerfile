@@ -1,5 +1,9 @@
 FROM jonbrouse/mysql
 
+ENV DB_USER=user \
+    DB_USER_PASSWORD=password \
+    ROOT_PASSWORD=password
+
 COPY assets/databases /tmp/databases/
 COPY assets/create_import_db.sh /tmp/create_import_db.sh
 
