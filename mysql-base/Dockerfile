@@ -5,8 +5,6 @@ RUN apk add --update mysql mysql-client && \
 
 COPY assets/create_import_db.sh /tmp/create_import_db.sh
 
-ENV derp=herp
-
 RUN chmod +x /tmp/create_import_db.sh && \
     /usr/bin/mysql_install_db --user=mysql && \
     mkdir /run/mysqld && \
