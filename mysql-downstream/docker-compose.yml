@@ -1,0 +1,15 @@
+version: '2'
+services:
+  mysql:
+    build: .
+    image: jonbrouse/mysql:downstream
+    container_name: mysql
+    hostname: mysql
+    command: |
+       --datadir=/var/lib/mysql
+       --tmpdir=/var/tmp/mysql
+       --user=root
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./assets/:/tmp/"

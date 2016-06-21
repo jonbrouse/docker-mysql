@@ -13,7 +13,7 @@ For example, if you add the SQL dump `microservicedb.sql` to `./assets/databases
 The `docker-compose.yml` file uses an alternate `Dockerfile`. When creating this `Dockerfile` name it `Dockerfile-alt`
 
 	FROM jonbrouse/mysql
-	CMD ["mysqld"]
+	ENTRYPOINT ["mysqld"]
 
 
 ### Build and Start Your Container
