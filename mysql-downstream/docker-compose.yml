@@ -5,6 +5,10 @@ services:
     image: jonbrouse/mysql:downstream
     container_name: mysql
     hostname: mysql
+    command: |
+       --datadir=/var/lib/mysql
+       --tmpdir=/var/tmp/mysql
+       --user=root
     environment:
       - DB_USER=user
       - DB_USER_PASSWORD=password
