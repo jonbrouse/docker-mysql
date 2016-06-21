@@ -1,11 +1,35 @@
-FROM jonbrouse/mysql
+FROM alpine:3.2
 
-# We don't need to always COPY this guy.
-#COPY assets/create_import_db.sh /tmp/create_import_db.sh
+RUN apk add --update mysql mysql-client && \
+    rm -rf /var/cache/apk/*
 
-COPY assets/databases /tmp/databases/
-RUN chmod +x create_import_db.sh && \
-    /bin/sh /tmp/create_import_db.sh && \
-     rm -rf /tmp/*
+RUN /usr/bin/mysql_install_db --user=mysql && \
+    mkdir /run/mysqld && \
+    chown -R mysql:root /run/mysqld
 
-CMD ["mysqld"]
+#    mkdir -p /var/lib/mysql && \
+#    mkdir -p /etc/mysql/conf.d && \
+#    { \
+#        echo '[mysqld]'; \
+#        echo 'user = root'; \
+#        echo 'datadir = /var/lib/mysql'; \
+#        echo 'port = 3306'; \
+#        echo 'log-bin = /var/lib/mysql/mysql-bin'; \
+#        echo '!includedir /etc/mysql/conf.d/'; \
+#    } > /etc/mysql/my.cnf && \
+
+#    sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
+
+COPY assets/ /tmp/
+RUN chmod +x /tmp/create_import_db.sh && \
+    chown -R mysql:root /tmp
+
+USER mysql
+EXPOSE 3306
+WORKDIR /tmp
+
+ONBUILD COPY assets/databases /tmp/databases/
+ONBUILD RUN /bin/sh /tmp/create_import_db.sh && \
+            rm -rf /tmp/*
+
+ENTRYPOINT ["mysqld"]

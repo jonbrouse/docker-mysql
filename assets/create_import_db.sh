@@ -1,12 +1,16 @@
 #!/bin/bash
 
-/usr/sbin/mysqld &
+/usr/bin/mysqld --user=root &
 sleep 5
 
-for DB_FILENAME in `find . -name \*.sql -type f -printf "%f\n"`; do
-  DB_NAME=`basename -s .sql ${DB_FILENAME}`
-  mysqladmin -uroot create ${DB_NAME}
-  mysql -uroot ${DB_NAME} < ${DB_FILENAME}
+for DB_FILENAME in `find . -name \*.sql -type f -exec basename {} .sql \;`; do
+  DB_NAME=`basename ${DB_FILENAME} .sql`
+  /usr/bin/mysqladmin -u root password '${ROOT_PASSWORD}'
+
+  mysqladmin create ${DB_NAME} -p
+  echo "CREATE DATABASE ${DB_NAME}" | mysql
+  mysql -D ${DB_NAME} < ${DB_FILENAME}
+  #mysql -D asterisk -u root -p < SQL/newinstall.sql
   echo "CREATE USER '${DB_USER}'@'%' IDENTIFIED BY '${DB_USER_PASSWORD}'" | mysql
   echo "GRANT ALL ON ${DB_NAME}.* TO '${DB_USER}'@'%'; FLUSH PRIVILEGES" | mysql
   echo "GRANT ALL ON *.* TO root@'%' WITH GRANT OPTION; FLUSH PRIVILEGES" | mysql
