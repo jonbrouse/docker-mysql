@@ -8,7 +8,6 @@ for DB_FILENAME in `find . -name \*.sql -type f -exec basename {} .sql \;`; do
   /usr/bin/mysqladmin -u root password '${ROOT_PASSWORD}'
 
   mysqladmin create ${DB_NAME} -p
-  echo "CREATE DATABASE ${DB_NAME}" | mysql
   mysql -D ${DB_NAME} < ${DB_FILENAME}
   #mysql -D asterisk -u root -p < SQL/newinstall.sql
   echo "CREATE USER '${DB_USER}'@'%' IDENTIFIED BY '${DB_USER_PASSWORD}'" | mysql
